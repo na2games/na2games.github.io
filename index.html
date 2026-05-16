@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>na²games — Indie Game Studio</title>
+  <meta name="description" content="na²games — bağımsız oyun stüdyosu. Mobil oyunlar tasarlıyor ve geliştiriyoruz." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f4f0;
+      --fg: #111110;
+      --muted: #6b6a65;
+      --line: #dddbd5;
+      --card: #ffffff;
+      --accent: #111110;
+      --tag-bg: #eceae4;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 5vw;
+      background: rgba(245,244,240,0.9);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.35rem;
+      letter-spacing: -0.01em;
+      color: var(--fg);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.85rem; font-weight: 400;
+      color: var(--muted); text-decoration: none;
+      letter-spacing: 0.03em; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--fg); }
+
+    /* HERO */
+    .hero {
+      min-height: 100svh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 5vw 5rem;
+      position: relative;
+      border-bottom: 1px solid var(--line);
+    }
+    .hero-eyebrow {
+      font-size: 0.78rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 1.25rem;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3rem, 8vw, 7.5rem);
+      line-height: 1.0; letter-spacing: -0.03em;
+      max-width: 14ch; margin-bottom: 2rem;
+    }
+    .hero h1 em { font-style: italic; color: var(--muted); }
+    .hero-sub { font-size: 1rem; color: var(--muted); max-width: 42ch; margin-bottom: 3rem; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--accent); color: #fff;
+      font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
+      font-weight: 400; letter-spacing: 0.04em;
+      padding: 0.85rem 1.75rem; border-radius: 2px;
+      text-decoration: none; transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.78; }
+    .hero-scroll {
+      position: absolute; bottom: 2rem; right: 5vw;
+      font-size: 0.72rem; color: var(--muted);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      writing-mode: vertical-rl;
+    }
+
+    /* SECTIONS */
+    section { padding: 7rem 5vw; border-bottom: 1px solid var(--line); }
+    .section-label {
+      font-size: 0.72rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 4rem;
+    }
+    .section-label span {
+      display: inline-block; width: 2.5rem; height: 1px;
+      background: var(--muted); vertical-align: middle; margin-right: 0.75rem;
+    }
+
+    /* GAMES */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .game-card {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 4px; overflow: hidden;
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .game-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-3px); }
+    .game-card-cover {
+      width: 100%; aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #e8e5de 0%, #d4d0c8 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Serif Display', serif;
+      font-size: 3.5rem; color: #aaa8a2; letter-spacing: -0.02em;
+    }
+    .game-card-body { padding: 1.5rem; }
+    .game-card-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.35rem; margin-bottom: 0.4rem;
+    }
+    .game-card-desc { font-size: 0.88rem; color: var(--muted); margin-bottom: 1.25rem; line-height: 1.65; }
+    .game-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }
+    .tag {
+      font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
+      background: var(--tag-bg); color: var(--muted);
+      padding: 0.25rem 0.65rem; border-radius: 2px;
+    }
+    .store-links { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .store-btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.78rem; font-weight: 500; color: var(--fg);
+      text-decoration: none; border: 1px solid var(--line);
+      padding: 0.5rem 1rem; border-radius: 2px;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .store-btn:hover { background: var(--fg); color: #fff; border-color: var(--fg); }
+
+    /* ABOUT */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+    .about-heading {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      line-height: 1.1; letter-spacing: -0.025em; margin-bottom: 2rem;
+    }
+    .about-heading em { font-style: italic; color: var(--muted); }
+    .about-text { font-size: 0.95rem; color: var(--muted); line-height: 1.85; }
+    .about-text p + p { margin-top: 1.25rem; }
+    .about-stats { display: flex; flex-direction: column; gap: 2.5rem; }
+    .stat-item { border-top: 1px solid var(--line); padding-top: 1.5rem; }
+    .stat-number {
+      font-family: 'DM Serif Display', serif;
+      font-size: 3rem; line-height: 1; letter-spacing: -0.03em; margin-bottom: 0.25rem;
+    }
+    .stat-label { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+
+    /* CONTACT */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+    .contact-heading {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      line-height: 1.1; letter-spacing: -0.025em; margin-bottom: 1.25rem;
+    }
+    .contact-sub { font-size: 0.95rem; color: var(--muted); max-width: 36ch; }
+    .contact-items { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--card); border: 1px solid var(--line); border-radius: 4px;
+      text-decoration: none; color: var(--fg);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .contact-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); transform: translateX(4px); }
+    .contact-icon { font-size: 1.1rem; }
+    .contact-label { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; display: block; margin-bottom: 0.1rem; }
+    .contact-value { font-size: 0.95rem; font-weight: 400; }
+
+    /* PRIVACY */
+    .privacy-inner { max-width: 720px; }
+    .lang-toggle { display: flex; gap: 0.5rem; margin-bottom: 3rem; flex-wrap: wrap; }
+    .lang-btn {
+      font-family: 'DM Sans', sans-serif; font-size: 0.78rem;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      background: none; border: 1px solid var(--line);
+      color: var(--muted); padding: 0.45rem 1rem;
+      border-radius: 2px; cursor: pointer; transition: all 0.18s;
+    }
+    .lang-btn.active, .lang-btn:hover { background: var(--fg); color: #fff; border-color: var(--fg); }
+    .privacy-section { display: none; }
+    .privacy-section.active { display: block; }
+    .privacy-section h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.75rem; letter-spacing: -0.02em; margin-bottom: 2rem;
+    }
+    .privacy-section h3 {
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--muted); margin: 2rem 0 0.65rem;
+    }
+    .privacy-section p { font-size: 0.92rem; color: var(--muted); line-height: 1.8; }
+    .privacy-section a { color: var(--fg); }
+    .updated { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.04em; margin-bottom: 1.5rem; }
+
+    /* FOOTER */
+    footer {
+      padding: 2.5rem 5vw;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo { font-family: 'DM Serif Display', serif; font-size: 1rem; color: var(--fg); text-decoration: none; }
+    .footer-copy { font-size: 0.78rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 0.78rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--fg); }
+
+    /* ANIMATIONS */
+    .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-up.visible { opacity: 1; transform: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .hero-scroll { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">na²games</a>
+  <ul class="nav-links">
+    <li><a href="#games">Games</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#privacy">Privacy</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">Indie Game Studio</p>
+  <h1>We make <em>games</em> people love to play.</h1>
+  <p class="hero-sub">na²games küçük ama tutkulu bir bağımsız stüdyo. Sade mekaniklerle kalıcı deneyimler yaratıyoruz.</p>
+  <a href="#games" class="btn">Oyunlarımızı gör →</a>
+  <span class="hero-scroll">Scroll</span>
+</section>
+
+<!-- GAMES -->
+<section id="games">
+  <p class="section-label"><span></span>Oyunlarımız</p>
+  <div class="games-grid">
+    <div class="game-card fade-up">
+      <div class="game-card-cover">Wh</div>
+      <div class="game-card-body">
+        <h3 class="game-card-title">WordHop: Word Hunter</h3>
+        <p class="game-card-desc">Harfleri birleştir, kelimeleri bul. Bağımlılık yapan kelime bulmaca deneyimi — İngilizce, Türkçe, İspanyolca ve Almanca desteğiyle.</p>
+        <div class="game-tags">
+          <span class="tag">Kelime</span>
+          <span class="tag">Bulmaca</span>
+          <span class="tag">Mobil</span>
+          <span class="tag">4 Dil</span>
+        </div>
+        <div class="store-links">
+          <a href="#" class="store-btn">▶ Google Play</a>
+          <a href="#" class="store-btn">⬡ App Store</a>
+        </div>
+      </div>
+    </div>
+    <div class="game-card fade-up" style="opacity:0.45; pointer-events:none;">
+      <div class="game-card-cover" style="font-size:1rem; color:#bbb; letter-spacing:0.12em; text-transform:uppercase;">Yakında</div>
+      <div class="game-card-body">
+        <h3 class="game-card-title">???</h3>
+        <p class="game-card-desc">Yeni bir şeyler geliyor. Takipte kal.</p>
+        <div class="game-tags"><span class="tag">TBA</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label"><span></span>Hakkımızda</p>
+  <div class="about-grid">
+    <div>
+      <h2 class="about-heading">Küçük stüdyo, <em>büyük fikirler.</em></h2>
+      <div class="about-text">
+        <p>na²games, oyun yapmanın özündeki şeye — iyi tasarım, temiz mekanikler ve gerçek eğlenceye — inanan bağımsız bir stüdyodur.</p>
+        <p>Karmaşıklık değil, netlik arıyoruz. Her oyunumuz, oyuncunun ekrana baktığı ilk saniyeden itibaren sezgisel ve tatmin edici hissetmeli.</p>
+        <p>Türkiye'den dünyaya ulaşan oyunlar yapıyoruz — çok dilli destek, evrensel tasarım anlayışı.</p>
+      </div>
+    </div>
+    <div class="about-stats">
+      <div class="stat-item fade-up">
+        <div class="stat-number">1</div>
+        <div class="stat-label">Yayınlanan Oyun</div>
+      </div>
+      <div class="stat-item fade-up">
+        <div class="stat-number">4</div>
+        <div class="stat-label">Desteklenen Dil</div>
+      </div>
+      <div class="stat-item fade-up">
+        <div class="stat-number">∞</div>
+        <div class="stat-label">Keşfedilecek Kelime</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label"><span></span>İletişim</p>
+  <div class="contact-grid">
+    <div>
+      <h2 class="contact-heading">Selamlaşalım.</h2>
+      <p class="contact-sub">Sorularınız, iş birliği teklifleriniz veya geri bildiriminiz için ulaşın.</p>
+    </div>
+    <div class="contact-items">
+      <a href="mailto:kirliali64@gmail.com" class="contact-item">
+        <span class="contact-icon">✉</span>
+        <div>
+          <span class="contact-label">E-posta</span>
+          <span class="contact-value">kirliali64@gmail.com</span>
+        </div>
+      </a>
+      <a href="https://play.google.com/store/apps/developer?id=na2games" target="_blank" rel="noopener" class="contact-item">
+        <span class="contact-icon">▶</span>
+        <div>
+          <span class="contact-label">Google Play</span>
+          <span class="contact-value">na²games Geliştirici Sayfası</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section id="privacy">
+  <p class="section-label"><span></span>Gizlilik Politikası</p>
+  <div class="privacy-inner">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="showPrivacy('en', this)">English</button>
+      <button class="lang-btn" onclick="showPrivacy('tr', this)">Türkçe</button>
+      <button class="lang-btn" onclick="showPrivacy('es', this)">Español</button>
+      <button class="lang-btn" onclick="showPrivacy('de', this)">Deutsch</button>
+    </div>
+
+    <!-- EN -->
+    <div class="privacy-section active" id="priv-en">
+      <p class="updated">Last updated: May 9, 2026</p>
+      <h2>WordHop: Word Hunter — Privacy Policy</h2>
+      <h3>1. Data Collection</h3>
+      <p>Word Hop stores your game progress (completed levels, scores, gold amount, purchased items) locally on your device only. This data is not sent to our servers.</p>
+      <h3>2. Advertisements</h3>
+      <p>Our application uses Google AdMob to display advertisements. AdMob may collect device identifiers and usage data to serve personalized ads. For more information, please review <a href="https://policies.google.com/privacy" target="_blank">Google's Privacy Policy</a>.</p>
+      <h3>3. Children's Privacy</h3>
+      <p>Our application does not knowingly collect personal information from children under 13.</p>
+      <h3>4. Data Security</h3>
+      <p>Game data is stored locally and encrypted on your device to prevent unauthorized access. Internet connection is only used for ad delivery and time validation for daily rewards.</p>
+      <h3>5. Contact</h3>
+      <p>For questions: <strong>kirliali64@gmail.com</strong></p>
+    </div>
+
+    <!-- TR -->
+    <div class="privacy-section" id="priv-tr">
+      <p class="updated">Son güncelleme: 9 Mayıs 2026</p>
+      <h2>WordHop: Word Hunter — Gizlilik Politikası</h2>
+      <h3>1. Toplanan Veriler</h3>
+      <p>Word Hop, oyun ilerlemenizi (tamamlanan bölümler, puanlar, altın miktarı, satın alınan eşyalar) yalnızca cihazınızda yerel olarak saklar. Bu veriler sunucularımıza gönderilmez.</p>
+      <h3>2. Reklamlar</h3>
+      <p>Uygulamamız Google AdMob kullanarak reklam göstermektedir. AdMob, kişiselleştirilmiş reklamlar sunmak için cihaz tanımlayıcıları ve kullanım verilerini toplayabilir. Daha fazla bilgi için <a href="https://policies.google.com/privacy" target="_blank">Google Gizlilik Politikası</a>'nı inceleyiniz.</p>
+      <h3>3. Çocukların Gizliliği</h3>
+      <p>Uygulamamız 13 yaş altı çocuklardan bilerek kişisel bilgi toplamaz.</p>
+      <h3>4. Veri Güvenliği</h3>
+      <p>Oyun verileri yetkisiz erişimi engellemek amacıyla cihazınızda şifrelenmiş olarak yerel şekilde saklanır. İnternet bağlantısı yalnızca reklam gösterimi ve günlük ödüller için zaman doğrulaması amacıyla kullanılır.</p>
+      <h3>5. İletişim</h3>
+      <p>Sorularınız için: <strong>kirliali64@gmail.com</strong></p>
+    </div>
+
+    <!-- ES -->
+    <div class="privacy-section" id="priv-es">
+      <p class="updated">Última actualización: 9 de mayo de 2026</p>
+      <h2>WordHop: Word Hunter — Política de Privacidad</h2>
+      <h3>1. Datos Recopilados</h3>
+      <p>Word Hop almacena tu progreso de juego (niveles completados, puntuaciones, cantidad de oro, objetos comprados) únicamente en tu dispositivo. Estos datos no se envían a nuestros servidores.</p>
+      <h3>2. Publicidad</h3>
+      <p>Nuestra aplicación utiliza Google AdMob para mostrar anuncios. AdMob puede recopilar identificadores de dispositivo y datos de uso para mostrar anuncios personalizados. Para más información, consulta la <a href="https://policies.google.com/privacy" target="_blank">Política de Privacidad de Google</a>.</p>
+      <h3>3. Privacidad de los Niños</h3>
+      <p>Nuestra aplicación no recopila intencionalmente información personal de menores de 13 años.</p>
+      <h3>4. Seguridad de Datos</h3>
+      <p>Los datos del juego se almacenan localmente y están encriptados en su dispositivo para evitar accesos no autorizados. La conexión a internet solo se utiliza para la entrega de anuncios y la validación del tiempo para recompensas diarias.</p>
+      <h3>5. Contacto</h3>
+      <p>Para preguntas: <strong>kirliali64@gmail.com</strong></p>
+    </div>
+
+    <!-- DE -->
+    <div class="privacy-section" id="priv-de">
+      <p class="updated">Zuletzt aktualisiert: 9. Mai 2026</p>
+      <h2>WordHop: Word Hunter — Datenschutzerklärung</h2>
+      <h3>1. Datenerfassung</h3>
+      <p>Word Hop speichert Ihren Spielfortschritt (abgeschlossene Level, Punkte, Goldmenge, gekaufte Gegenstände) ausschließlich lokal auf Ihrem Gerät. Diese Daten werden nicht an unsere Server übermittelt.</p>
+      <h3>2. Werbung</h3>
+      <p>Unsere App verwendet Google AdMob zur Anzeige von Werbung. AdMob kann Gerätekennungen und Nutzungsdaten erfassen, um personalisierte Anzeigen zu schalten. Weitere Informationen finden Sie in der <a href="https://policies.google.com/privacy" target="_blank">Datenschutzrichtlinie von Google</a>.</p>
+      <h3>3. Datenschutz für Kinder</h3>
+      <p>Unsere App erfasst wissentlich keine personenbezogenen Daten von Kindern unter 13 Jahren.</p>
+      <h3>4. Datensicherheit</h3>
+      <p>Spieldaten werden lokal und verschlüsselt auf Ihrem Gerät gespeichert, um unbefugten Zugriff zu verhindern. Die Internetverbindung wird ausschließlich für die Anzeigenbereitstellung und Zeitvalidierung für tägliche Belohnungen verwendet.</p>
+      <h3>5. Kontakt</h3>
+      <p>Bei Fragen: <strong>kirliali64@gmail.com</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">na²games</a>
+  <span class="footer-copy">© 2026 na²games. Tüm hakları saklıdır.</span>
+  <div class="footer-links">
+    <a href="#games">Games</a>
+    <a href="#about">About</a>
+    <a href="#privacy">Privacy</a>
+    <a href="mailto:kirliali64@gmail.com">Contact</a>
+  </div>
+</footer>
+
+<script>
+  function showPrivacy(lang, btn) {
+    document.querySelectorAll('.privacy-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('priv-' + lang).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
