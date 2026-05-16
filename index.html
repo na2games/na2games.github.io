@@ -42,18 +42,33 @@
     }
     .nav-logo {
       font-family: 'DM Serif Display', serif;
-      font-size: 1.35rem;
-      letter-spacing: -0.01em;
-      color: var(--fg);
-      text-decoration: none;
+      font-size: 1.35rem; letter-spacing: -0.01em;
+      color: var(--fg); text-decoration: none;
     }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-right { display: flex; align-items: center; gap: 2rem; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a {
       font-size: 0.85rem; font-weight: 400;
       color: var(--muted); text-decoration: none;
       letter-spacing: 0.03em; transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--fg); }
+
+    /* LANG SWITCHER */
+    .lang-switch {
+      display: flex; gap: 0; border: 1px solid var(--line); border-radius: 2px; overflow: hidden;
+    }
+    .lang-switch button {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      background: none; border: none;
+      padding: 0.35rem 0.7rem;
+      color: var(--muted); cursor: pointer;
+      transition: all 0.18s;
+    }
+    .lang-switch button.active { background: var(--fg); color: #fff; }
+    .lang-switch button:not(.active):hover { background: var(--tag-bg); }
 
     /* HERO */
     .hero {
@@ -184,15 +199,15 @@
 
     /* PRIVACY */
     .privacy-inner { max-width: 720px; }
-    .lang-toggle { display: flex; gap: 0.5rem; margin-bottom: 3rem; flex-wrap: wrap; }
-    .lang-btn {
+    .priv-lang-toggle { display: flex; gap: 0.5rem; margin-bottom: 3rem; flex-wrap: wrap; }
+    .priv-lang-btn {
       font-family: 'DM Sans', sans-serif; font-size: 0.78rem;
       letter-spacing: 0.06em; text-transform: uppercase;
       background: none; border: 1px solid var(--line);
       color: var(--muted); padding: 0.45rem 1rem;
       border-radius: 2px; cursor: pointer; transition: all 0.18s;
     }
-    .lang-btn.active, .lang-btn:hover { background: var(--fg); color: #fff; border-color: var(--fg); }
+    .priv-lang-btn.active, .priv-lang-btn:hover { background: var(--fg); color: #fff; border-color: var(--fg); }
     .privacy-section { display: none; }
     .privacy-section.active { display: block; }
     .privacy-section h2 {
@@ -223,6 +238,15 @@
     .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
     .fade-up.visible { opacity: 1; transform: none; }
 
+    /* hide/show by lang */
+    [data-lang] { display: none; }
+    .lang-tr [data-lang="tr"] { display: block; }
+    .lang-en [data-lang="en"] { display: block; }
+    /* inline elements */
+    span[data-lang] { display: none; }
+    .lang-tr span[data-lang="tr"] { display: inline; }
+    .lang-en span[data-lang="en"] { display: inline; }
+
     /* RESPONSIVE */
     @media (max-width: 768px) {
       .nav-links { display: none; }
@@ -231,42 +255,65 @@
     }
   </style>
 </head>
-<body>
+<body class="lang-tr">
 
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">na²games</a>
-  <ul class="nav-links">
-    <li><a href="#games">Games</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#privacy">Privacy</a></li>
-  </ul>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#games"><span data-lang="tr">Oyunlar</span><span data-lang="en">Games</span></a></li>
+      <li><a href="#about"><span data-lang="tr">Hakkımızda</span><span data-lang="en">About</span></a></li>
+      <li><a href="#contact"><span data-lang="tr">İletişim</span><span data-lang="en">Contact</span></a></li>
+      <li><a href="#privacy"><span data-lang="tr">Gizlilik</span><span data-lang="en">Privacy</span></a></li>
+    </ul>
+    <div class="lang-switch">
+      <button class="active" onclick="setLang('tr', this)">TR</button>
+      <button onclick="setLang('en', this)">EN</button>
+    </div>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <p class="hero-eyebrow">Indie Game Studio</p>
-  <h1>We make <em>games</em> people love to play.</h1>
-  <p class="hero-sub">na²games küçük ama tutkulu bir bağımsız stüdyo. Sade mekaniklerle kalıcı deneyimler yaratıyoruz.</p>
-  <a href="#games" class="btn">Oyunlarımızı gör →</a>
+
+  <div data-lang="tr">
+    <h1>İnsanların sevdiği <em>oyunlar</em> yapıyoruz.</h1>
+    <p class="hero-sub">na²games küçük ama tutkulu bir bağımsız stüdyo. Sade mekaniklerle kalıcı deneyimler yaratıyoruz.</p>
+    <a href="#games" class="btn">Oyunlarımızı gör →</a>
+  </div>
+
+  <div data-lang="en">
+    <h1>We make <em>games</em> people love to play.</h1>
+    <p class="hero-sub">na²games is a small but passionate indie studio. We create lasting experiences with simple mechanics.</p>
+    <a href="#games" class="btn">See our games →</a>
+  </div>
+
   <span class="hero-scroll">Scroll</span>
 </section>
 
 <!-- GAMES -->
 <section id="games">
-  <p class="section-label"><span></span>Oyunlarımız</p>
+  <p class="section-label">
+    <span></span>
+    <span data-lang="tr">Oyunlarımız</span><span data-lang="en">Our Games</span>
+  </p>
   <div class="games-grid">
+
     <div class="game-card fade-up">
       <div class="game-card-cover">Wh</div>
       <div class="game-card-body">
         <h3 class="game-card-title">WordHop: Word Hunter</h3>
-        <p class="game-card-desc">Harfleri birleştir, kelimeleri bul. Bağımlılık yapan kelime bulmaca deneyimi — İngilizce, Türkçe, İspanyolca ve Almanca desteğiyle.</p>
+        <p class="game-card-desc">
+          <span data-lang="tr">Harfleri birleştir, kelimeleri bul. Bağımlılık yapan kelime bulmaca deneyimi — İngilizce, Türkçe, İspanyolca ve Almanca desteğiyle.</span>
+          <span data-lang="en">Connect letters, find words. An addictive word puzzle experience — available in English, Turkish, Spanish and German.</span>
+        </p>
         <div class="game-tags">
-          <span class="tag">Kelime</span>
-          <span class="tag">Bulmaca</span>
-          <span class="tag">Mobil</span>
-          <span class="tag">4 Dil</span>
+          <span class="tag"><span data-lang="tr">Kelime</span><span data-lang="en">Word</span></span>
+          <span class="tag"><span data-lang="tr">Bulmaca</span><span data-lang="en">Puzzle</span></span>
+          <span class="tag"><span data-lang="tr">Mobil</span><span data-lang="en">Mobile</span></span>
+          <span class="tag">4 <span data-lang="tr">Dil</span><span data-lang="en">Languages</span></span>
         </div>
         <div class="store-links">
           <a href="#" class="store-btn">▶ Google Play</a>
@@ -274,59 +321,93 @@
         </div>
       </div>
     </div>
+
     <div class="game-card fade-up" style="opacity:0.45; pointer-events:none;">
-      <div class="game-card-cover" style="font-size:1rem; color:#bbb; letter-spacing:0.12em; text-transform:uppercase;">Yakında</div>
+      <div class="game-card-cover" style="font-size:1rem; color:#bbb; letter-spacing:0.12em; text-transform:uppercase;">
+        <span data-lang="tr">Yakında</span><span data-lang="en">Coming Soon</span>
+      </div>
       <div class="game-card-body">
         <h3 class="game-card-title">???</h3>
-        <p class="game-card-desc">Yeni bir şeyler geliyor. Takipte kal.</p>
+        <p class="game-card-desc">
+          <span data-lang="tr">Yeni bir şeyler geliyor. Takipte kal.</span>
+          <span data-lang="en">Something new is coming. Stay tuned.</span>
+        </p>
         <div class="game-tags"><span class="tag">TBA</span></div>
       </div>
     </div>
+
   </div>
 </section>
 
 <!-- ABOUT -->
 <section id="about">
-  <p class="section-label"><span></span>Hakkımızda</p>
+  <p class="section-label">
+    <span></span>
+    <span data-lang="tr">Hakkımızda</span><span data-lang="en">About Us</span>
+  </p>
   <div class="about-grid">
+
     <div>
-      <h2 class="about-heading">Küçük stüdyo, <em>büyük fikirler.</em></h2>
-      <div class="about-text">
-        <p>na²games, oyun yapmanın özündeki şeye — iyi tasarım, temiz mekanikler ve gerçek eğlenceye — inanan bağımsız bir stüdyodur.</p>
-        <p>Karmaşıklık değil, netlik arıyoruz. Her oyunumuz, oyuncunun ekrana baktığı ilk saniyeden itibaren sezgisel ve tatmin edici hissetmeli.</p>
-        <p>Türkiye'den dünyaya ulaşan oyunlar yapıyoruz — çok dilli destek, evrensel tasarım anlayışı.</p>
+      <div data-lang="tr">
+        <h2 class="about-heading">Küçük stüdyo, <em>büyük fikirler.</em></h2>
+        <div class="about-text">
+          <p>na²games, oyun yapmanın özündeki şeye — iyi tasarım, temiz mekanikler ve gerçek eğlenceye — inanan bağımsız bir stüdyodur.</p>
+          <p>Karmaşıklık değil, netlik arıyoruz. Her oyunumuz, oyuncunun ekrana baktığı ilk saniyeden itibaren sezgisel ve tatmin edici hissetmeli.</p>
+          <p>Türkiye'den dünyaya ulaşan oyunlar yapıyoruz — çok dilli destek, evrensel tasarım anlayışı.</p>
+        </div>
+      </div>
+      <div data-lang="en">
+        <h2 class="about-heading">Small studio, <em>big ideas.</em></h2>
+        <div class="about-text">
+          <p>na²games is an independent studio that believes in the essence of game making — good design, clean mechanics, and genuine fun.</p>
+          <p>We seek clarity, not complexity. Every game we make should feel intuitive and satisfying from the very first second a player looks at the screen.</p>
+          <p>We make games that reach the world from Turkey — multilingual support, universal design thinking.</p>
+        </div>
       </div>
     </div>
+
     <div class="about-stats">
       <div class="stat-item fade-up">
         <div class="stat-number">1</div>
-        <div class="stat-label">Yayınlanan Oyun</div>
+        <div class="stat-label"><span data-lang="tr">Yayınlanan Oyun</span><span data-lang="en">Published Game</span></div>
       </div>
       <div class="stat-item fade-up">
         <div class="stat-number">4</div>
-        <div class="stat-label">Desteklenen Dil</div>
+        <div class="stat-label"><span data-lang="tr">Desteklenen Dil</span><span data-lang="en">Supported Languages</span></div>
       </div>
       <div class="stat-item fade-up">
         <div class="stat-number">∞</div>
-        <div class="stat-label">Keşfedilecek Kelime</div>
+        <div class="stat-label"><span data-lang="tr">Keşfedilecek Kelime</span><span data-lang="en">Words to Discover</span></div>
       </div>
     </div>
+
   </div>
 </section>
 
 <!-- CONTACT -->
 <section id="contact">
-  <p class="section-label"><span></span>İletişim</p>
+  <p class="section-label">
+    <span></span>
+    <span data-lang="tr">İletişim</span><span data-lang="en">Contact</span>
+  </p>
   <div class="contact-grid">
+
     <div>
-      <h2 class="contact-heading">Selamlaşalım.</h2>
-      <p class="contact-sub">Sorularınız, iş birliği teklifleriniz veya geri bildiriminiz için ulaşın.</p>
+      <div data-lang="tr">
+        <h2 class="contact-heading">Selamlaşalım.</h2>
+        <p class="contact-sub">Sorularınız, iş birliği teklifleriniz veya geri bildiriminiz için ulaşın.</p>
+      </div>
+      <div data-lang="en">
+        <h2 class="contact-heading">Let's talk.</h2>
+        <p class="contact-sub">Reach out for questions, collaboration offers, or feedback.</p>
+      </div>
     </div>
+
     <div class="contact-items">
       <a href="mailto:kirliali64@gmail.com" class="contact-item">
         <span class="contact-icon">✉</span>
         <div>
-          <span class="contact-label">E-posta</span>
+          <span class="contact-label">E-mail</span>
           <span class="contact-value">kirliali64@gmail.com</span>
         </div>
       </a>
@@ -334,22 +415,26 @@
         <span class="contact-icon">▶</span>
         <div>
           <span class="contact-label">Google Play</span>
-          <span class="contact-value">na²games Geliştirici Sayfası</span>
+          <span class="contact-value">na²games</span>
         </div>
       </a>
     </div>
+
   </div>
 </section>
 
 <!-- PRIVACY -->
 <section id="privacy">
-  <p class="section-label"><span></span>Gizlilik Politikası</p>
+  <p class="section-label">
+    <span></span>
+    <span data-lang="tr">Gizlilik Politikası</span><span data-lang="en">Privacy Policy</span>
+  </p>
   <div class="privacy-inner">
-    <div class="lang-toggle">
-      <button class="lang-btn active" onclick="showPrivacy('en', this)">English</button>
-      <button class="lang-btn" onclick="showPrivacy('tr', this)">Türkçe</button>
-      <button class="lang-btn" onclick="showPrivacy('es', this)">Español</button>
-      <button class="lang-btn" onclick="showPrivacy('de', this)">Deutsch</button>
+    <div class="priv-lang-toggle">
+      <button class="priv-lang-btn active" onclick="showPrivacy('en', this)">English</button>
+      <button class="priv-lang-btn" onclick="showPrivacy('tr', this)">Türkçe</button>
+      <button class="priv-lang-btn" onclick="showPrivacy('es', this)">Español</button>
+      <button class="priv-lang-btn" onclick="showPrivacy('de', this)">Deutsch</button>
     </div>
 
     <!-- EN -->
@@ -415,25 +500,33 @@
       <h3>5. Kontakt</h3>
       <p>Bei Fragen: <strong>kirliali64@gmail.com</strong></p>
     </div>
+
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
   <a href="#" class="footer-logo">na²games</a>
-  <span class="footer-copy">© 2026 na²games. Tüm hakları saklıdır.</span>
+  <span class="footer-copy">© 2026 na²games.</span>
   <div class="footer-links">
-    <a href="#games">Games</a>
-    <a href="#about">About</a>
-    <a href="#privacy">Privacy</a>
-    <a href="mailto:kirliali64@gmail.com">Contact</a>
+    <a href="#games"><span data-lang="tr">Oyunlar</span><span data-lang="en">Games</span></a>
+    <a href="#about"><span data-lang="tr">Hakkımızda</span><span data-lang="en">About</span></a>
+    <a href="#privacy"><span data-lang="tr">Gizlilik</span><span data-lang="en">Privacy</span></a>
+    <a href="mailto:kirliali64@gmail.com"><span data-lang="tr">İletişim</span><span data-lang="en">Contact</span></a>
   </div>
 </footer>
 
 <script>
+  function setLang(lang, btn) {
+    document.body.className = 'lang-' + lang;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.lang-switch button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
   function showPrivacy(lang, btn) {
     document.querySelectorAll('.privacy-section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.priv-lang-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('priv-' + lang).classList.add('active');
     btn.classList.add('active');
   }
